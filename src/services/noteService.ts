@@ -26,8 +26,8 @@ export async function fetchNotes(query:string, page:number) {
 
 
 
-export async function createNote(note:NoteFormValues) {
-    const res = await axios.post<NoteFormValues>(`${BASE_URL}/notes`, note,{
+export async function createNote(note:Note) {
+    const res = await axios.post<Note>(`${BASE_URL}/notes`, note,{
         headers: {
          Authorization: `Bearer ${myKey}`  
         },
@@ -39,12 +39,9 @@ export async function createNote(note:NoteFormValues) {
 
 
 
-interface DeleteNoteProps{
-    notes: Note;
-    totalPages: string;
-}
+
 export async function deleteNote(id:string) {
-    const res = await axios.delete<DeleteNoteProps>(`${BASE_URL}/notes/${id}`,
+    const res = await axios.delete<Note>(`${BASE_URL}/notes/${id}`,
         {
         headers: {
          Authorization: `Bearer ${myKey}`  
@@ -52,5 +49,5 @@ export async function deleteNote(id:string) {
     }
     )
 
-return res.data   
+return res.data  
 }

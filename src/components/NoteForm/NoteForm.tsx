@@ -1,8 +1,11 @@
 import css from './NoteForm.module.css'
 import { Formik, Form, Field, type FormikHelpers, ErrorMessage} from 'formik';
 import { useId } from 'react';
-
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Yup from "yup";
+import toast from 'react-hot-toast';
+import { createNote } from '../../services/noteService';
+
 
 export interface NoteFormValues {
   title: string;
@@ -22,7 +25,6 @@ const OrderFormSchema = Yup.object().shape({
 })
 
 interface NoteFormProps{
-  onSubmit: (note: NoteFormValues) => void;
   onCancel: () => void;
 }
 
@@ -31,15 +33,26 @@ const initialValues: NoteFormValues = {
     content: '',
     tag:'Work',
 }
-export default function NoteForm({onSubmit, onCancel}:NoteFormProps) {
+export default function NoteForm({ onCancel}:NoteFormProps) {
   const fieldId = useId();
+  const queryClient = useQueryClient();
+  
+  const createMutation = useMutation({
+  mutationFn: createNote,
 
+  onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['note'] });
+    toast.success('Successfully created!');
+    onCancel();
+  },
+         });
+  
   const handleSubmit = (
     values: NoteFormValues,
     formikHelpers: FormikHelpers<NoteFormValues>,
   ) => {
+    createMutation.mutate(values); 
     formikHelpers.resetForm();
-    onSubmit(values); 
   };
 
 
@@ -48,7 +61,6 @@ export default function NoteForm({onSubmit, onCancel}:NoteFormProps) {
       initialValues={initialValues}
       validationSchema={OrderFormSchema}
       onSubmit={handleSubmit}
-      
     >
     <Form className={css.form}>
       <div className={css.formGroup}>
