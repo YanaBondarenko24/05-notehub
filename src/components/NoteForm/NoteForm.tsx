@@ -22,7 +22,8 @@ const OrderFormSchema = Yup.object().shape({
 })
 
 interface NoteForm{
-  onClose: (note: Note) => void;
+  onSubmit: (note: Note) => void;
+  onCancel: () => void;
 }
 
 const initialValues: NoteFormValues = {
@@ -30,7 +31,7 @@ const initialValues: NoteFormValues = {
     content: '',
     tag:'Work',
 }
-export default function NoteForm({onClose}:NoteForm) {
+export default function NoteForm({onSubmit, onCancel}:NoteForm) {
   const fieldId = useId();
 
   const handleSubmit = (
@@ -38,13 +39,9 @@ export default function NoteForm({onClose}:NoteForm) {
     formikHelpers: FormikHelpers<NoteFormValues>,
   ) => {
     formikHelpers.resetForm();
-    onClose(values);
-    console.log(values);
-    
+    onSubmit(values); 
   };
-  const handleClick = (values: Note)=>{
-    onClose(values)
-  }
+
 
   return (
     <Formik
@@ -84,9 +81,16 @@ export default function NoteForm({onClose}:NoteForm) {
       </div>
 
       <div className={css.actions}>
-          <button  type="button" className={css.cancelButton} onClick={()=> handleClick}>
-          Cancel
-        </button>
+<button
+  type="button"
+  onClick={() => {
+    console.log('CLICK');
+    alert('CLICK');
+    onCancel();
+  }}
+>
+  Cancel
+</button>
           <button
           type="submit"
           className={css.submitButton}

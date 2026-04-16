@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createNote, deleteNote, fetchNotes } from '../../services/noteService';
 import { useDebouncedCallback } from 'use-debounce'
 import SearchBox from '../SearchBox/SearchBox';
@@ -31,18 +31,31 @@ export default function App() {
   onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['note'] });
       toast.success('Successfully created!');
+      setIsModalOpen(false);
   },
 });
     const [isModalOpen, setIsModalOpen] = useState(false);
     
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState('')
-    const {data,isError,isLoading} = useQuery({
+    const {data,isError,isLoading,isSuccess} = useQuery({
         queryKey: ['note', search, currentPage],
         queryFn: () => fetchNotes(search,currentPage),
         placeholderData: keepPreviousData,
         
     })
+      useEffect(() => {
+    if (isSuccess && data?.notes.length === 0) {
+      toast("No notes found for your request.",
+        {
+          style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+          },
+        })
+    }
+  }, [data, isSuccess]);
     const totalPages = data?.totalPages ?? 0;
     
     const handleSearch = useDebouncedCallback(setSearch, 300);
@@ -51,41 +64,29 @@ export default function App() {
     
     const handleDelete = ( id: string) => {
         deleteMutation.mutate(id);
-        console.log('Delete note');
     }
  
     return (<div className={css.app}>
         
         <header className={css.toolbar}>
-
             <SearchBox text={search} onSearch={handleSearch} />
             <Toaster/>
          {totalPages > 1 && <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage}/>}
          <button onClick={() => setIsModalOpen(true)} className={css.button}>Create note +</button>
          {isModalOpen && (
-                <Modal onClose={() => {
-                    setIsModalOpen(false); 
+        <Modal onClose={() => {
+            setIsModalOpen(false); 
                 }}>
-                    <NoteForm onClose={(note: Note) => {
-                        setIsModalOpen(false); 
-                        createMutation.mutate(
-                            note);  
-                        console.log(searchNote);
+            <NoteForm onSubmit={(note: Note) => {
+                        createMutation.mutate(note); 
                         
-                    }}/>
+                    }}  onCancel={() => setIsModalOpen(false) }/>
         </Modal>
       )}
         </header>
         {isLoading && <Loader />}
         {isError && <ErrorMessage/>}
         {data?.notes && <NoteList notes={data.notes} onDelete={handleDelete} onSelect={(note) => setSearchNote(note)} />}  
-        {data?.notes.length === 0 &&  toast("No movies found for your request.",
-      {
-    style: {
-      borderRadius: '10px',
-      background: '#333',
-      color: '#fff',
-    },
-  })}
+        
     </div>)
 }
