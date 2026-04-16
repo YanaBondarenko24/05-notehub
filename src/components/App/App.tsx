@@ -7,7 +7,7 @@ import { keepPreviousData, useQuery} from '@tanstack/react-query'
 import NoteList from '../NoteList/NoteList';
 import Modal from '../Modal/Modal';
 import NoteForm from '../NoteForm/NoteForm';
-import type { CreateNote} from '../../types/note';
+import type { Note} from '../../types/note';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Pagination from '../Pagination/Pagination';
 import Loader from '../Loader/Loader';
@@ -77,7 +77,7 @@ export default function App() {
         <Modal onClose={() => {
             setIsModalOpen(false); 
                 }}>
-            <NoteForm onSubmit={(note: CreateNote) => {
+            <NoteForm onSubmit={(note: Note) => {
                         createMutation.mutate(note); 
                         
                     }}  onCancel={() => setIsModalOpen(false) }/>

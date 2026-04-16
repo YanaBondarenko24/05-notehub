@@ -1,7 +1,6 @@
 import css from './NoteForm.module.css'
 import { Formik, Form, Field, type FormikHelpers, ErrorMessage} from 'formik';
 import { useId } from 'react';
-import type { CreateNote } from '../../types/note';
 import * as Yup from "yup";
 
 interface NoteFormValues {
