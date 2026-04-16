@@ -8,12 +8,12 @@ interface ModalProps {
 }
 
 export default function Modal({ onClose, children }: ModalProps) {
-/*     const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
         if (event.target === event.currentTarget) {
             onClose();
         }
     };
- */
+
     useEffect(()=> {
        const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -33,10 +33,10 @@ export default function Modal({ onClose, children }: ModalProps) {
         className={css.backdrop}
         role="dialog"
        aria-modal="true"
-     onClick={onClose}
+     onClick={handleBackdropClick}
      
     >
-        <div className={css.modal} onClick={(e) => e.stopPropagation()}>
+        <div className={css.modal}>
             {children}
         </div>
    </div>, document.body);

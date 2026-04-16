@@ -4,10 +4,10 @@ import css from './NoteList.module.css'
 interface NoteListProps{
   notes: NoteTag[];
   onDelete: (id:string) => void;
- /*  onSelect: (note: NoteTag) => void; */
+
 }
 
-export default function NoteList({ notes, onDelete, /* onSelect */ }: NoteListProps) {
+export default function NoteList({ notes, onDelete,  }: NoteListProps) {
 
     return (<ul className={css.list}>
 	{notes.map((note) => <li key={note.id} className={css.listItem}>
@@ -17,7 +17,7 @@ export default function NoteList({ notes, onDelete, /* onSelect */ }: NoteListPr
       <span className={css.tag}>{note.tag}</span>
       <button onClick={() => {
         onDelete(note.id);
-        /* onSelect(note); */
+       
       }} className={css.button}>Delete</button>
     </div>
   </li>) 

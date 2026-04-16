@@ -60,7 +60,7 @@ export default function App() {
     
     const handleSearch = useDebouncedCallback(setSearch, 300);
 
-    /* const [searchNote, setSearchNote] = useState<Note | null>(null) */
+
     
     const handleDelete = ( id: string) => {
         deleteMutation.mutate(id);
@@ -86,7 +86,7 @@ export default function App() {
         </header>
         {isLoading && <Loader />}
         {isError && <ErrorMessage/>}
-        {data?.notes && <NoteList notes={data.notes} onDelete={handleDelete} /* onSelect={(note) => setSearchNote(note)} */ />}  
+        {data?.notes && <NoteList notes={data.notes} onDelete={handleDelete} />}  
         
     </div>)
 }

@@ -81,16 +81,9 @@ export default function NoteForm({onSubmit, onCancel}:NoteForm) {
       </div>
 
       <div className={css.actions}>
-<button
-  type="button"
-  onClick={() => {
-    console.log('CLICK');
-    alert('CLICK');
-    onCancel();
-  }}
->
-  Cancel
-</button>
+    <button type="button" className={css.cancelButton} onClick={onCancel}>
+      Cancel
+    </button>
           <button
           type="submit"
           className={css.submitButton}
