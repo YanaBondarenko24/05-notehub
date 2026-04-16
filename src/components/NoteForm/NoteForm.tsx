@@ -1,9 +1,10 @@
 import css from './NoteForm.module.css'
 import { Formik, Form, Field, type FormikHelpers, ErrorMessage} from 'formik';
 import { useId } from 'react';
+
 import * as Yup from "yup";
 
-interface NoteFormValues {
+export interface NoteFormValues {
   title: string;
   content: string;
   tag: "Todo"| "Work"| "Personal"| "Meeting"| "Shopping"
