@@ -8,7 +8,7 @@ interface NoteListProps{
 }
 
 export default function NoteList({ notes, onDelete, onSelect }: NoteListProps) {
-  
+
     return (<ul className={css.list}>
 	{notes.map((note) => <li key={note.id} className={css.listItem}>
     <h2 className={css.title}>{ note.title}</h2>

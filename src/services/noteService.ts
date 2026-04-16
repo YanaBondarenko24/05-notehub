@@ -3,24 +3,24 @@ import type {Note,NoteTag} from '../types/note';
 
 const BASE_URL = "https://notehub-public.goit.study/api";
 const myKey = import.meta.env.VITE_NOTEHUB_TOKEN;
-console.log(myKey);
+
 
 interface FetchNotesProps{
     notes: NoteTag[];
     totalPages: number;
 }
 
-export async function fetchNotes(query:string) {
+export async function fetchNotes(query:string, page:number) {
     const res = await axios.get<FetchNotesProps>(`${BASE_URL}/notes`, {
         headers: {
             Authorization: `Bearer ${myKey}`
         },
         params: {
-            search: query
+            search: query,
+            page,
         }
     })
-     console.log(res.data.notes);
-    return res.data.notes;
+    return res.data;
 }
 
 
@@ -34,7 +34,7 @@ export async function createNote(note:Note) {
         },
         
     })
-    console.log(note);
+
     return res.data;
 }
 
@@ -52,6 +52,6 @@ export async function deleteNote(id:string) {
         },
     }
     )
-    console.log(res.data.notes); 
-return res.data.notes    
+
+return res.data   
 }

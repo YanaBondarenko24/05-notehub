@@ -42,7 +42,7 @@ export default function NoteForm({onClose}:NoteForm) {
     console.log(values);
     
   };
-  const handleClick = (values: Node)=>{
+  const handleClick = (values: Note)=>{
     onClose(values)
   }
 
