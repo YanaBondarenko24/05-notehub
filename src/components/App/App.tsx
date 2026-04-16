@@ -7,7 +7,7 @@ import { keepPreviousData, useQuery} from '@tanstack/react-query'
 import NoteList from '../NoteList/NoteList';
 import Modal from '../Modal/Modal';
 import NoteForm from '../NoteForm/NoteForm';
-import type { Note} from '../../types/note';
+import type { CreateNote} from '../../types/note';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Pagination from '../Pagination/Pagination';
 import Loader from '../Loader/Loader';
@@ -71,13 +71,13 @@ export default function App() {
         <header className={css.toolbar}>
             <SearchBox text={search} onSearch={handleSearch} />
             <Toaster/>
-         {totalPages > 1 && <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage}/>}
+         {totalPages > 1 && isSuccess && <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage}/>}
          <button onClick={() => setIsModalOpen(true)} className={css.button}>Create note +</button>
          {isModalOpen && (
         <Modal onClose={() => {
             setIsModalOpen(false); 
                 }}>
-            <NoteForm onSubmit={(note: Note) => {
+            <NoteForm onSubmit={(note: CreateNote) => {
                         createMutation.mutate(note); 
                         
                     }}  onCancel={() => setIsModalOpen(false) }/>

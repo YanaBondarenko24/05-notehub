@@ -1,8 +1,8 @@
-import type {NoteTag} from '../../types/note'
+import type {Note} from '../../types/note'
 import css from './NoteList.module.css'
 
 interface NoteListProps{
-  notes: NoteTag[];
+  notes: Note[];
   onDelete: (id:string) => void;
 
 }

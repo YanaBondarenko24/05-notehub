@@ -1,7 +1,7 @@
 import css from './NoteForm.module.css'
 import { Formik, Form, Field, type FormikHelpers, ErrorMessage} from 'formik';
 import { useId } from 'react';
-import type { Note } from '../../types/note';
+import type { CreateNote } from '../../types/note';
 import * as Yup from "yup";
 
 interface NoteFormValues {
@@ -21,8 +21,8 @@ const OrderFormSchema = Yup.object().shape({
   .oneOf(["Todo", "Work","Personal","Meeting", "Shopping"])
 })
 
-interface NoteForm{
-  onSubmit: (note: Note) => void;
+interface NoteFormProps{
+  onSubmit: (note: NoteFormValues) => void;
   onCancel: () => void;
 }
 
@@ -31,7 +31,7 @@ const initialValues: NoteFormValues = {
     content: '',
     tag:'Work',
 }
-export default function NoteForm({onSubmit, onCancel}:NoteForm) {
+export default function NoteForm({onSubmit, onCancel}:NoteFormProps) {
   const fieldId = useId();
 
   const handleSubmit = (

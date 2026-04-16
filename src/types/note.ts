@@ -1,9 +1,11 @@
-export  interface Note {
+export  interface CreateNote {
     content: string;
     title: string;
     tag: "Todo"| "Work"| "Personal"| "Meeting"| "Shopping";
     
 }
-export interface NoteTag extends Note{
-id: string;
+export interface Note extends CreateNote{
+    id: string;
+    createdAt: string;
+    updatedAt: string;
 }
