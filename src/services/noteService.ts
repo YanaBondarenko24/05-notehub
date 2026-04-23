@@ -26,8 +26,8 @@ export async function fetchNotes(query:string, page:number) {
 
 
 
-export async function createNote(note:Note) {
-    const res = await axios.post<Note>(`${BASE_URL}/notes`, note,{
+export async function createNote(note:NoteFormValues) {
+    const res = await axios.post<NoteFormValues>(`${BASE_URL}/notes`, note,{
         headers: {
          Authorization: `Bearer ${myKey}`  
         },

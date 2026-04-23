@@ -7,8 +7,3 @@ export  interface Note {
     updatedAt: string;
     
 }
-/* export interface Note extends CreateNote{
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-} */
